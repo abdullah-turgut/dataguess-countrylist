@@ -8,6 +8,10 @@ import { BiErrorCircle } from 'react-icons/bi';
 import useCountryStore from '@/hooks/useCountryStore';
 import { Country } from '@/types/types';
 import { traceDeprecation } from 'process';
+import TableHead from './table-head';
+import TableBody from './table-body';
+import Pagination from './pagination';
+import SearchInput from './search-input';
 
 const GET_COUNTRY_DATA = gql`
   query {
@@ -70,46 +74,14 @@ export default function DataTable() {
     );
   }
 
-  console.log(countries);
-
   return (
-    <div className="w-3/4 mx-auto">
-      <table>
-        <thead>
-          {countries.length > 0 && (
-            <tr>
-              <th className="px-5 py-2 border border-black/5">&#x2116;</th>
-              {Object.keys(countries[0]).map((key) => (
-                <th key={key} className="px-5 py-2 border border-black/5">
-                  {key.charAt(0).toUpperCase() + key.slice(1, key.length)}
-                </th>
-              ))}
-            </tr>
-          )}
-        </thead>
-        <tbody>
-          {countries.map((country, i) => (
-            <tr
-              key={country.name}
-              className="text-sm cursor-pointer hover:bg-black/5"
-            >
-              <td className="px-5 py-1  border border-black/5 text-center">
-                {i + 1}
-              </td>
-              {Object.entries(country).map((entry, j) => (
-                <td
-                  key={j}
-                  className="px-5 py-1 h-12  border border-black/5 break-words"
-                  lang="en"
-                >
-                  {entry[1] ? entry[1] : <span>Na</span>}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>Pagination</tfoot>
+    <div className="w-3/4 mx-auto flex flex-col gap-y-5 py-5">
+      <SearchInput />
+      <table className="text-sm">
+        <TableHead />
+        <TableBody />
       </table>
+      <Pagination />
     </div>
   );
 }
