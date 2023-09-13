@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function SearchInput() {
   const [input, setInput] = useState('');
-  const { setFilter } = useCountryStore();
+  const { setFilter, setPage } = useCountryStore();
 
   function filterData(str: string) {
     setInput(str);
@@ -25,16 +25,19 @@ export default function SearchInput() {
         search: searchText[1],
         group: '',
       });
+      setPage(1);
     } else if (!searchText && groupText) {
       setFilter({
         search: '',
         group: groupText[1],
       });
+      setPage(1);
     } else if (searchGroupText) {
       setFilter({
         search: searchGroupText[1],
         group: searchGroupText[2],
       });
+      setPage(1);
     }
   }
 

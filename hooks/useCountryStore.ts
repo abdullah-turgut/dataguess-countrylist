@@ -7,6 +7,10 @@ interface CountryState {
   setCountries: (arr: Country[]) => void;
   countries: Country[] | [];
   setFilter: (obj: SearchInput) => void;
+  page: number;
+  setPage: (num: number) => void;
+  nextPage: () => void;
+  prevPage: () => void;
 }
 
 const useCountryStore = create<CountryState>((set) => ({
@@ -29,6 +33,17 @@ const useCountryStore = create<CountryState>((set) => ({
             country.languages?.toLowerCase().includes(obj.group)
         ),
     })),
+  page: 2,
+  setPage: (num: number) => set({ page: num }),
+  nextPage: () =>
+    set((state) => ({
+      page:
+        state.page === Math.ceil(state.countries.length / 12)
+          ? state.page
+          : state.page + 1,
+    })),
+  prevPage: () =>
+    set((state) => ({ page: state.page === 1 ? 1 : state.page - 1 })),
 }));
 
 export default useCountryStore;
