@@ -11,6 +11,8 @@ interface CountryState {
   setPage: (num: number) => void;
   nextPage: () => void;
   prevPage: () => void;
+  firstPage: () => void;
+  lastPage: () => void;
 }
 
 const useCountryStore = create<CountryState>((set) => ({
@@ -33,7 +35,7 @@ const useCountryStore = create<CountryState>((set) => ({
             country.languages?.toLowerCase().includes(obj.group)
         ),
     })),
-  page: 2,
+  page: 1,
   setPage: (num: number) => set({ page: num }),
   nextPage: () =>
     set((state) => ({
@@ -44,6 +46,9 @@ const useCountryStore = create<CountryState>((set) => ({
     })),
   prevPage: () =>
     set((state) => ({ page: state.page === 1 ? 1 : state.page - 1 })),
+  firstPage: () => set({ page: 1 }),
+  lastPage: () =>
+    set((state) => ({ page: Math.ceil(state.countries.length / 12) })),
 }));
 
 export default useCountryStore;

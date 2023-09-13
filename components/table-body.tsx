@@ -5,13 +5,20 @@ import useCountryStore from '@/hooks/useCountryStore';
 export default function TableBody() {
   const countries = useCountryStore((state) => state.countries);
   const { page } = useCountryStore();
+
+  console.log(page);
   return (
-    <tbody className="bg-black">
+    <tbody className="">
       {countries
+
         .map((country, i) => (
           <tr
             key={country.name}
-            className="cursor-pointer bg-white hover:bg-slate-50"
+            className={`cursor-pointer ${
+              i === page * 12 - 3
+                ? 'bg-blue-200 hover:bg-blue-200/80'
+                : 'bg-white hover:bg-slate-100'
+            }`}
           >
             <td className="px-5 py-1  border border-black/5 text-center">
               {i + 1}

@@ -3,16 +3,14 @@
 import useCountryStore from '@/hooks/useCountryStore';
 
 export default function Pagination() {
-  const { countries } = useCountryStore();
-  const nextPage = useCountryStore((state) => state.nextPage);
-  const prevPage = useCountryStore((state) => state.prevPage);
-
-  console.log(countries);
+  const { prevPage, nextPage, firstPage, lastPage } = useCountryStore();
 
   return (
     <div>
       <div onClick={prevPage}>prev</div>
       <div onClick={nextPage}>next</div>
+      <div onClick={firstPage}>first</div>
+      <div onClick={lastPage}>last</div>
     </div>
   );
 }
