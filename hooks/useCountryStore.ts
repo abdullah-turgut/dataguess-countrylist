@@ -18,15 +18,15 @@ const useCountryStore = create<CountryState>((set) => ({
       countries: state.countriesRaw
         .filter(
           (country) =>
-            country.name.toLowerCase().includes(obj.search) ||
+            country.name?.toLowerCase().includes(obj.search) ||
             country.capital?.toLowerCase().includes(obj.search) ||
             country.currency?.toLowerCase().includes(obj.search) ||
             country.phone?.toLowerCase().includes(obj.search)
         )
         .filter(
           (country) =>
-            country.continent.toLowerCase().includes(obj.group) ||
-            country.languages.toLowerCase().includes(obj.group)
+            country.continent?.toLowerCase().includes(obj.group) ||
+            country.languages?.toLowerCase().includes(obj.group)
         ),
     })),
 }));
