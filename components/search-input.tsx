@@ -1,7 +1,6 @@
 'use client';
 
 import { FiSearch } from 'react-icons/fi';
-import { IoCloseOutline } from 'react-icons/io5';
 
 import useCountryStore from '@/hooks/useCountryStore';
 import { useState } from 'react';
@@ -12,65 +11,54 @@ export default function SearchInput() {
 
   function filterData(str: string) {
     setInput(str);
+    const searchText = str.match(/search:(.*)/);
+    const groupText = str.match(/group:(.*)/);
+    const searchGroupText = str.match(/search:(.*) group:(.*)/);
 
-    if (str === '') {
+    if (!searchText && !groupText) {
       setFilter({
         search: '',
         group: '',
       });
-    }
-
-    if (input.includes('search') && !input.includes('group')) {
-      const [searchKey, search] = str.split(':');
-      const searchObj = {
-        search: (search && search.trim().toLowerCase()) || '', //to omit "group" key and trim excessive spaces
+    } else if (searchText && !groupText) {
+      setFilter({
+        search: searchText[1],
         group: '',
-      };
-
-      setFilter(searchObj);
-    }
-
-    if (!input.includes('search') && input.includes('group')) {
-      const [groupKey, group] = str.split(':');
-      const searchObj = {
-        search: '', //to omit "group" key and trim excessive spaces
-        group: (group && group.trim().toLowerCase()) || '',
-      };
-
-      setFilter(searchObj);
-    }
-
-    if (input.includes('search') && input.includes('group')) {
-      const [search, group] = str.split(' ');
-      const searchObj = {
-        search: (search && search.slice(7).trim().toLowerCase()) || '', //to omit "group" key and trim excessive spaces
-        group: (group && group.slice(6).trim().toLowerCase()) || '',
-      };
-
-      console.log(searchObj);
-
-      setFilter(searchObj);
+      });
+    } else if (!searchText && groupText) {
+      setFilter({
+        search: '',
+        group: groupText[1],
+      });
+    } else if (searchGroupText) {
+      setFilter({
+        search: searchGroupText[1],
+        group: searchGroupText[2],
+      });
     }
   }
 
-  const deneme = 'search:Turkey group:Asia';
-  const x = deneme.match(/search:(.*) group:(.*)/);
-
-  console.log(x);
-
   return (
-    <div className="relative w-[500px]">
-      <input
-        type="text"
-        className="w-full border-b px-3 text-sm py-2 focus:outline-none placeholder-shown:text-sm peer"
-        placeholder="search:turkey group:asia"
-        value={input}
-        onChange={(e) => filterData(e.target.value)}
-      />
-      <FiSearch
-        className="absolute top-1/2 -translate-y-1/2 right-3"
-        size={20}
-      />
+    <div className="">
+      <div className="relative w-[500px]">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          className="w-full border rounded-full px-5 text-sm py-2 focus:outline-none placeholder-shown:text-sm peer"
+          placeholder="eg. search:turkey group:asia"
+          value={input}
+          onChange={(e) => filterData(e.target.value)}
+        />
+        <FiSearch
+          className="absolute top-1/2 -translate-y-1/2 right-3"
+          size={20}
+        />
+      </div>
+      <label htmlFor="search" className="text-xs px-2 text-black/50 italic">
+        You can search by name, capital, currency, phone and group by continent
+        and languages
+      </label>
     </div>
   );
 }

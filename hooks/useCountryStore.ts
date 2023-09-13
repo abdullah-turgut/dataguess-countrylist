@@ -16,7 +16,13 @@ const useCountryStore = create<CountryState>((set) => ({
   setFilter: (obj: SearchInput) =>
     set((state) => ({
       countries: state.countriesRaw
-        .filter((country) => country.name.toLowerCase().includes(obj.search))
+        .filter(
+          (country) =>
+            country.name.toLowerCase().includes(obj.search) ||
+            country.capital?.toLowerCase().includes(obj.search) ||
+            country.currency?.toLowerCase().includes(obj.search) ||
+            country.phone?.toLowerCase().includes(obj.search)
+        )
         .filter(
           (country) =>
             country.continent.toLowerCase().includes(obj.group) ||
