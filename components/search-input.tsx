@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function SearchInput() {
   const [input, setInput] = useState('');
-  const { setFilter, setPage } = useCountryStore();
+  const { setFilter, setPage, setSelectedItem, countries } = useCountryStore();
 
   function filterData(str: string) {
     setInput(str);

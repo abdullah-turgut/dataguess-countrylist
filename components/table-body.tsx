@@ -4,9 +4,9 @@ import useCountryStore from '@/hooks/useCountryStore';
 
 export default function TableBody() {
   const countries = useCountryStore((state) => state.countries);
-  const { page } = useCountryStore();
+  const { page, selectedItem } = useCountryStore();
 
-  console.log(page);
+  console.log(selectedItem);
   return (
     <tbody className="">
       {countries
@@ -15,7 +15,7 @@ export default function TableBody() {
           <tr
             key={country.name}
             className={`cursor-pointer ${
-              i === page * 12 - 3
+              i === selectedItem
                 ? 'bg-blue-200 hover:bg-blue-200/80'
                 : 'bg-white hover:bg-slate-100'
             }`}
