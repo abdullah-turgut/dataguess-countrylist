@@ -75,7 +75,7 @@ export default function DataTable() {
   }
 
   return (
-    <div className="w-3/4 mx-auto flex flex-col gap-y-5 py-5">
+    <div className="w-full px-10 flex flex-col gap-y-5 py-5">
       <SearchInput />
       <table className="text-sm">
         <TableHead />
