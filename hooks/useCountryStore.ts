@@ -3,19 +3,23 @@ import { create } from 'zustand';
 import { Country, SearchInput } from '@/types/types';
 
 interface CountryState {
-  countries: Country[] | [];
+  countriesRaw: Country[] | [];
   setCountries: (arr: Country[]) => void;
+  countries: Country[] | [];
   setFilter: (obj: SearchInput) => void;
 }
 
 const useCountryStore = create<CountryState>((set) => ({
+  countriesRaw: [],
+  setCountries: (arr: Country[]) => set({ countriesRaw: arr, countries: arr }),
   countries: [],
-  setCountries: (arr: Country[]) => set({ countries: arr }),
   setFilter: (obj: SearchInput) =>
     set((state) => ({
-      countries: state.countries
-        .filter((country) => country.name.includes(obj.search))
-        .filter((country) => country.continent.includes(obj.group)),
+      countries: state.countriesRaw
+        .filter((country) => country.name.toLowerCase().includes(obj.search))
+        .filter((country) =>
+          country.continent.toLowerCase().includes(obj.group)
+        ),
     })),
 }));
 
