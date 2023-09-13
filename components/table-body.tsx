@@ -4,13 +4,13 @@ import useCountryStore from '@/hooks/useCountryStore';
 
 export default function TableBody() {
   const countries = useCountryStore((state) => state.countries);
-  const { page, selectedItem, setSelectedItem, color, counter, setCounter } =
+  const { page, selectedItem, setSelectedItem, color, setCounter } =
     useCountryStore();
 
   const handleClick = (e: any, i: any) => {
     if (i !== selectedItem) {
       setSelectedItem(i);
-      setCounter(); // Renk değişimini tetikle
+      setCounter(); // trigger color change
     }
   };
 
