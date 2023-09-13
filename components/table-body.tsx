@@ -4,21 +4,21 @@ import useCountryStore from '@/hooks/useCountryStore';
 
 export default function TableBody() {
   const countries = useCountryStore((state) => state.countries);
-  const { page, selectedItem } = useCountryStore();
+  const { page, selectedItem, setSelectedItem } = useCountryStore();
 
-  console.log(selectedItem);
   return (
-    <tbody className="">
+    <tbody>
       {countries
-
         .map((country, i) => (
           <tr
             key={country.name}
+            id={i.toString()}
             className={`cursor-pointer ${
               i === selectedItem
                 ? 'bg-blue-200 hover:bg-blue-200/80'
                 : 'bg-white hover:bg-slate-100'
             }`}
+            onClick={(e) => setSelectedItem(Number(e.currentTarget.id))}
           >
             <td className="px-5 py-1  border border-black/5 text-center">
               {i + 1}
