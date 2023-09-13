@@ -15,7 +15,6 @@ export default function Pagination() {
   const [inputValue, setInputValue] = useState(page.toString());
 
   useEffect(() => {
-    // Sayfa numarası değiştiğinde input değerini güncelle
     setInputValue(page.toString());
   }, [page]);
 
