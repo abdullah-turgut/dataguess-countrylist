@@ -14,8 +14,6 @@ export default function TableBody() {
     }
   };
 
-  console.log(color);
-
   return (
     <tbody>
       {countries
