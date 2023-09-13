@@ -15,6 +15,9 @@ interface CountryState {
   lastPage: () => void;
   selectedItem: number;
   setSelectedItem: (num: number) => void;
+  counter: number;
+  setCounter: () => void;
+  color: string;
 }
 
 const useCountryStore = create<CountryState>((set) => ({
@@ -171,6 +174,15 @@ const useCountryStore = create<CountryState>((set) => ({
     }),
   selectedItem: 9,
   setSelectedItem: (num: number) => set({ selectedItem: num }),
+  counter: 1,
+  setCounter: () =>
+    set((state) => ({
+      counter: state.counter + 1,
+      color: ['bg-green-200', 'bg-red-200', 'bg-yellow-200', 'bg-blue-200'][
+        state.counter % 4
+      ],
+    })),
+  color: 'bg-blue-200',
 }));
 
 export default useCountryStore;

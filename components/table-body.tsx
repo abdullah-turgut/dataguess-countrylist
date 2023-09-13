@@ -4,7 +4,17 @@ import useCountryStore from '@/hooks/useCountryStore';
 
 export default function TableBody() {
   const countries = useCountryStore((state) => state.countries);
-  const { page, selectedItem, setSelectedItem } = useCountryStore();
+  const { page, selectedItem, setSelectedItem, color, counter, setCounter } =
+    useCountryStore();
+
+  const handleClick = (e: any, i: any) => {
+    if (i !== selectedItem) {
+      setSelectedItem(i);
+      setCounter(); // Renk değişimini tetikle
+    }
+  };
+
+  console.log(color);
 
   return (
     <tbody>
@@ -14,11 +24,9 @@ export default function TableBody() {
             key={country.name}
             id={i.toString()}
             className={`cursor-pointer ${
-              i === selectedItem
-                ? 'bg-blue-200 hover:bg-blue-200/80'
-                : 'bg-white hover:bg-slate-100'
+              i === selectedItem ? `${color}` : 'bg-white hover:bg-slate-100'
             }`}
-            onClick={(e) => setSelectedItem(Number(e.currentTarget.id))}
+            onClick={(e) => handleClick(e, i)}
           >
             <td className="px-5 py-1  border border-black/5 text-center">
               {i + 1}
